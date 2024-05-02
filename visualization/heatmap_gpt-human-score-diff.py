@@ -4,8 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Connect to the databases
-conn_summaries = sqlite3.connect('GPT4_summaries.db')
-conn_scores = sqlite3.connect('scores.db')
+conn_summaries = sqlite3.connect('/home/jeff/PycharmProjects/llm-agent/webui/GPT4_summaries.db')
+conn_scores = sqlite3.connect('/home/jeff/PycharmProjects/llm-agent/webui/scores.db')
 
 # Fetch the data from the 'Summaries' table
 summaries_data = pd.read_sql_query("SELECT * FROM Summaries", conn_summaries)
