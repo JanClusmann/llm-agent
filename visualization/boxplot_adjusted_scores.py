@@ -79,7 +79,7 @@ model_order = ["gpt-3.5", "gpt-4", "camel", "babyagi", "cot-zero", "cot-manual",
 
 # Plotting the box plot
 plt.figure(figsize=(15, 8))
-ax = sns.boxplot(x="Metric", y="Score", hue="Model", data=melted_df, palette=merged_palette, hue_order=model_order)
+ax = sns.boxplot(x="Metric", y="Score", hue="Model", data=melted_df, palette="colorblind", hue_order=model_order)
 
 # Customize plot elements
 ax.set_xlabel("Metric Adjusted", fontsize=23, color='black', labelpad=20, fontweight='normal', fontname='Arial')

@@ -66,7 +66,7 @@ model_order = ["gpt-3.5", "gpt-4", "camel", "babyagi", "cot-zero", "cot-manual",
 
 # Plotting the box plot
 plt.figure(figsize=(15, 8))
-ax = sns.boxplot(x="Metric", y="Score", hue="model", data=melted_merged_df, palette=merged_palette, hue_order=model_order)
+ax = sns.boxplot(x="Metric", y="Score", hue="model", data=melted_merged_df, palette="colorblind", hue_order=model_order)
 
 # Set the upper limit of the score to 10
 ax.set_ylim(bottom=None)

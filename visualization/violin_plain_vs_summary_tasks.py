@@ -143,3 +143,63 @@ def combined_violin_plot_by_metric(directory):
 
 # Call the function
 combined_violin_plot_by_metric('/home/jeff/PycharmProjects/llm-agent/generator/results')
+
+
+import os
+import re
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import sqlite3
+
+from scipy.stats import stats
+
+# Your existing functions: extract_model_and_task_from_filename, find_md_files, extract_scores_from_md, updated_aggregate_scores
+
+# Connect to the Summaries database
+conn_summaries = sqlite3.connect('/home/jeff/PycharmProjects/llm-agent/webui/GPT4_summaries.db')
+summaries_data = pd.read_sql_query("SELECT * FROM Summaries", conn_summaries)
+
+# Connect to the human scores database
+conn_human_scores = sqlite3.connect('/home/jeff/PycharmProjects/llm-agent/webui/scores.db')
+human_scores_data = pd.read_sql_query("SELECT * FROM score", conn_human_scores)
+
+# Modify human_scores_data to fit the existing data structure
+human_scores_data = human_scores_data.rename(columns={'creativity': 'novelty'})  # Assuming 'creativity' maps to 'novelty'
+human_scores_data['source'] = "Human Expert Ratings"
+human_scores_data = human_scores_data[['summary_id', 'accuracy', 'relevance', 'novelty', 'specificity', 'feasibility', 'source']]
+# You might need to adjust this depending on the exact structure of your human ratings table
+
+categories = ['accuracy', 'relevance', 'novelty', 'specificity', 'feasibility']
+
+# Adjust the existing combined_violin_plot_by_metric function to include human ratings
+def combined_violin_plot_by_metric(directory):
+    md_scores = updated_aggregate_scores(directory)
+    md_scores["source"] = "LLM-agents plain output"
+
+    summaries_scores = summaries_data[['task_index', 'model', 'accuracy', 'relevance', 'novelty', 'specificity', 'feasibility']].copy()
+    summaries_scores["source"] = "GPT-4 generated Summaries"
+    summaries_scores["task_index"] = summaries_scores["task_index"].astype(int)
+
+    # Assuming human_scores_data is already prepared and matches the required format
+    combined_scores = pd.concat([ summaries_scores, human_scores_data], ignore_index=True)
+    combined_scores = combined_scores.sort_values(by='task_index')  # Sort by task_index if necessary
+    combined_melted = combined_scores.melt(id_vars=['source', 'task_index'], value_vars=categories, var_name='category', value_name='score')
+
+    plt.figure(figsize=(18, 8))
+    sns.set(style="whitegrid", font_scale=2)
+
+    # Assuming you have three sources now
+    ax = sns.violinplot(data=combined_melted, x="category", y="score", hue="source", split=True, inner="quartile", cut=0, palette="colorblind")
+
+    # Customize the plot as needed
+    ax.set_xlabel("Metric", fontsize=28)
+    ax.set_ylabel("Score", fontsize=28)
+    ax.set_xticklabels([label.capitalize() for label in combined_melted['category'].unique()])
+
+    plt.legend(title="Score Source", loc='lower right')
+    plt.tight_layout()
+    plt.show()
+
+# Call your function with the directory path
+combined_violin_plot_by_metric('/home/jeff/PycharmProjects/llm-agent/generator/results')
