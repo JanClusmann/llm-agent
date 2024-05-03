@@ -9,12 +9,12 @@ import os
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Construct the full path to the CSV file
-csv_path = os.path.join(script_dir, "llm_task_list.csv")
+csv_path = os.path.join(script_dir, "clinical_knowledge_test.csv")
 
 key_file = os.path.join(script_dir, "API_KEY")
 
 # Define the output directory
-output_dir = os.path.join(script_dir, "results/")
+output_dir = os.path.join(script_dir, "results_mmlu/")
 
 def read_openai_api_key():
     try:
