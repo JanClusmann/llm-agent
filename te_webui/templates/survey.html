@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+    window.onload = function() {
+        // Load author from local storage when the page loads
+        var author = localStorage.getItem('author');
+        if (author) {
+            var select = document.getElementById('author');
+            for (var i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === author) {
+                    select.options[i].selected = true;
+                    break;
+                }
+            }
+        }
+    };
+
+    function saveAuthor() {
+        // Save author to local storage when the form is submitted
+        var author = document.getElementById('author').value;
+        localStorage.setItem('author', author);
+    }
+    </script>
+</head>
+<body>
+    <h1>Survey for Trial {{ trial['nctId'] }}</h1>
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    <form method="post" onsubmit="saveAuthor()">
+        <div class="container">
+            <div class="left-section">
+                <label for="author">Author:</label><br>
+                <select id="author" name="author" required>
+                    <option value="Schneider">Schneider</option>
+                    <option value="Clusmann">Clusmann</option>
+                    <option value="Kather">Kather</option>
+                    <option value="Truhn">Truhn</option>
+                    <option value="Isabella">Isabella</option>
+                    <option value="Dyke">Dyke</option>
+                </select><br>
+            </div>
+        </div>
+        {% for section, nested_criteria in trial['structured_criteria'].items() %}
+            <h3>{{ section }}</h3>
+            <ul>
+                {% for term, criteria_list in nested_criteria.items() %}
+                    <li>{{ term }}</li>
+                    <ul>
+                        {% set logic = criteria_list[0] %}
+                        {% set real_criteria = criteria_list[1] %}
+                        {% for item in real_criteria %}
+                            {% if item is string %}
+                                <li>
+                                    <label>{{ item }}</label><br>
+                                    <label>
+                                        <input type="radio" name="{{ term }}|{{ item }}" value="True"
+                                            {% if previous_results.get(term + '|' + item) == 'True' %}checked{% endif %}> True
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="{{ term }}|{{ item }}" value="False"
+                                            {% if previous_results.get(term + '|' + item) == 'False' %}checked{% endif %}> False
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="{{ term }}|{{ item }}" value="?"
+                                            {% if previous_results.get(term + '|' + item) == '?' %}checked{% endif %}> ?
+                                    </label>
+                                </li>
+                            {% elif item is iterable and not item is string %}
+                                {% for subitem in item %}
+                                    <li>
+                                        <label>{{ subitem }}</label><br>
+                                        <label>
+                                            <input type="radio" name="{{ term }}|{{ subitem }}" value="True"
+                                                {% if previous_results.get(term + '|' + subitem) == 'True' %}checked{% endif %}> True
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="{{ term }}|{{ subitem }}" value="False"
+                                                {% if previous_results.get(term + '|' + subitem) == 'False' %}checked{% endif %}> False
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="{{ term }}|{{ subitem }}" value="?"
+                                                {% if previous_results.get(term + '|' + subitem) == '?' %}checked{% endif %}> ?
+                                        </label>
+                                    </li>
+                                {% endfor %}
+                                <li>
+                                    <label>is the overall criterion met?</label><br>
+                                    <label>
+                                        <input type="radio" name="{{ term }}|global" value="True"
+                                            {% if previous_results.get(term + '|global') == 'True' %}checked{% endif %}> True
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="{{ term }}|global" value="False"
+                                            {% if previous_results.get(term + '|global') == 'False' %}checked{% endif %}> False
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="{{ term }}|global" value="?"
+                                            {% if previous_results.get(term + '|global') == '?' %}checked{% endif %}> ?
+                                    </label>
+                                </li>
+                            {% else %}
+                                <li>Unknown criterion type: {{ item }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

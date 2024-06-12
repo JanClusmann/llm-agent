@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+        }
+        input[type="text"], input[type="range"] {
+            width: 100%;
+            height: 40px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+            height: 60px; /* increased from 40px */
+            width: 200px; /* specify a width if you like, or use a percentage like 100% */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px; /* increased from default */
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .info-button {
+            position: relative;
+
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 16px;
+            border: none;
+            background-color: #ccc;
+            top: 10px; /* Adjust this value as needed */
+
+        }
+
+        .form-label, .info-container {
+            display: inline-block; /* Allow elements to sit side-by-side */
+            vertical-align: top; /* Aligns the tops of the label and info button */
+        }
+        .info-popup {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .info-container:hover .info-popup {
+            display: block;
+        }
+
+        .info-container {
+            margin-left: 10px; /* Space between label and info button */
+        }
+        select {
+            width: 100%;
+            height: 40px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        /* Additional styles for flexbox layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .left-section, .right-section {
+            flex: 0 0 48%; /* The elements will take up slightly less than half the space to account for any margins or padding */
+            box-sizing: border-box;
+            padding: 20px; /* Adding some padding for aesthetics */
+        }
+    </style>
+    <script>
+    window.onload = function() {
+        // Load author from local storage when the page loads
+    var author = localStorage.getItem('author');
+    if (author) {
+        var select = document.getElementById('author');
+        for(var i = 0; i < select.options.length; i++) {
+            if(select.options[i].value === author) {
+                select.options[i].selected = true;
+                break;
+            }
+        }
+    }
+};
+
+    function saveAuthor() {
+        // Save author to local storage when the form is submitted
+        var author = document.getElementById('author').value;
+        localStorage.setItem('author', author);
+    }
+</script>
+</head>
+<body>
+<form method="POST" onsubmit="saveAuthor()">
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+    <h2>Task</h2>
+    <p>{{ summary.eu_prompt }}</p>
+
+    <h2>Summary</h2>
+    <!--
+    <p><strong>Model:</strong> {{ summary.model }}</p>
+    <p><strong>Task:</strong> {{ summary.task }}</p>
+    <p><strong>Run:</strong> {{ summary.run }}</p>
+    <p><strong>Table Index:</strong> {{ summary.table_index }}</p>
+    <p><strong>File Path:</strong> {{ summary.file_path }}</p>
+    -->
+    <p><strong>Summary:<br></strong> {{ summary.summary }}</p>
+    <p><strong>Main Ideas:<br></strong> {{ summary.main_ideas|safe }}</p>
+            <!--
+    <p><strong>Factual accuracy:</strong> {{ summary.accuracy }}</p>
+    <p><strong>Problem Solving / Relevance:</strong> {{ summary.relevance }}</p>
+            <p><strong>Novelty / Creativity:</strong> {{ summary.novelty }}</p>
+    <p><strong>Specificity:</strong> {{ summary.specificity }}</p>
+    <p><strong>Feasibility:</strong> {{ summary.feasibility }}</p>
+-->
+
+            <input type="hidden" name="summary_id" value="{{ summary.id }}">
+    <input type="hidden" name="summary_id" value="{{ summary.id }}">
+    <label for="author">Author:</label><br>
+        <select id="author" name="author" required>y
+        <option value="Schneider">Schneider</option>
+        <option value="Clusmann">Clusmann</option>
+        <option value="Kather">Kather</option>
+        <option value="Truhn">Truhn</option>
+        <option value="Isabella">Isabella</option>
+        <option value="Dyke">Dyke</option>
+    </select><br>
+        </div>
+        <div class="right-section">
+    <div class="mb-3">
+        <div>
+      <label for="accuracy" class="form-label"><strong>Factual accuracy</strong></label>
+        <div class="info-container">
+            <button class="info-button" type="button" onclick="yourFunction()">?</button>
+        <div class="info-popup">
+
+
+            Factual Accuracy:<br>
+1.	Completely inaccurate; no factual content present.<br>
+2.	Predominantly inaccurate with rare hints of valid information.<br>
+3.	Some portions are accurate, but they're overshadowed by misinformation.<br>
+4.	Contains a mix of accurate and inaccurate information; roughly even.<br>
+5.	Slightly more accurate than not, but still contains significant inaccuracies.<br>
+6.	Generally accurate with a few noticeable errors.<br>
+7.	Mostly accurate, minor errors present.<br>
+8.	Highly accurate with very minor oversights.<br>
+9.	Almost entirely accurate, with only rare and insignificant errors.<br>
+10.	Completely accurate; every detail is correct.<br>
+        </div>
+        </div>
+            <p>-How factually accurate is the output? Rate the accuracy from 1 to 10.</p>
+    </div>
+      <input type="text" class="form-control" id="accuracy" placeholder="1-10" name="accuracy" min="1" max="10" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="relevance" class="form-label"><strong>Problem Solving / Relevance</strong></label>
+
+                <div class="info-container">
+                    <button class="info-button" type="button" onclick="yourFunction()">?</button>
+        <div class="info-popup">
+            Problem Solving / Relevance:<br>
+1.	No relevant content; doesn't address the problem at all.<br>
+2.	Barely touches on the problem but mostly off-topic.<br>
+3.	Some relevant points, but largely misses the main issue.<br>
+4.	A mix of relevant and irrelevant content.<br>
+5.	Marginally more relevant than not, but lacks depth.<br>
+6.	Generally addresses the problem, but with some oversights.<br>
+7.	Addresses the problem well, with only minor gaps.<br>
+8.	Provides a comprehensive solution with very few gaps.<br>
+9.	Almost entirely solves the problem, with only rare omissions.<br>
+10.	Perfectly addresses and solves the problem.<br>
+        </div>
+    </div>
+        <p>-How well did the model solve the problem? Rate the problem solving ability from 1 to 10.</p>
+    </div>
+      <input type="text" class="form-control" id="relevance" placeholder="1-10" name="relevance" min="1" max="10" required>
+
+
+    <div class="mb-3">
+      <label for="creativity" class="form-label"><strong>Novelty / Creativity</strong></label>
+
+                <div class="info-container">
+                    <button class="info-button" type="button" onclick="yourFunction()">?</button>
+        <div class="info-popup">
+            Novelty / Creativity:<br>
+1.	No originality; completely generic or copied content.<br>
+2.	Very little original thought; mostly clichéd.<br>
+3.	Some hints of creativity, but largely conventional.<br>
+4.	Mix of conventional and creative ideas.<br>
+5.	Slightly more creative than conventional.<br>
+6.	Generally creative with some generic aspects.<br>
+7.	Predominantly creative and original.<br>
+8.	Highly creative with very minor conventional aspects.<br>
+9.	Almost entirely original and innovative.<br>
+10.	Completely novel and groundbreaking.<br>
+        </div>
+    </div>
+        <p>-Assess the model's capacity for creativity and proposing novel or unconventional solutions from 1 to 10.</p>
+    </div>
+      <input type="text" class="form-control" id="creativity" placeholder="1-10" name="creativity" min="1" max="10" required>
+
+
+    <div class="mb-3">
+      <label for="specificity" class="form-label"><strong>Specificity</strong></label>
+                <div class="info-container">
+                    <button class="info-button" type="button" onclick="yourFunction()">?</button>
+        <div class="info-popup">
+            Specificity:<br>
+1.	Entirely vague; no specific details provided.<br>
+2.	Very broad, with rare mentions of specifics.<br>
+3.	Some specific points, but overshadowed by vagueness.<br>
+4.	Equal mix of specific details and general statements.<br>
+5.	Marginally more specific than vague.<br>
+6.	Generally specific with some broad statements.<br>
+7.	Detailed in most parts, with minor omissions.<br>
+8.	Highly detailed with very minor generalizations.<br>
+9.	Almost entirely detailed with only rare omissions.<br>
+10.	Completely specific; every aspect is detailed.<br>
+        </div>
+    </div>
+        <p>-Rate the level of detail from 1 to 10.</p>
+
+    </div>
+      <input type="text" class="form-control" id="specificity" placeholder="1-10" name="specificity" min="1" max="10" required>
+
+    <div class="mb-3">
+      <label for="feasibility" class="form-label"><strong>Feasibility</strong></label>
+
+                <div class="info-container">
+                    <button class="info-button" type="button" onclick="yourFunction()">?</button>
+        <div class="info-popup">
+            Feasibility:<br>
+1.	Completely infeasible; no grounding in reality.<br>
+2.	Very unlikely to be feasible with current means.<br>
+3.	Some hints of feasibility, but largely impractical.<br>
+4.	Mix of feasible and infeasible elements.<br>
+5.	Slightly more feasible than not, but significant challenges exist.<br>
+6.	Generally feasible, with some challenges.<br>
+7.	Likely feasible with minor challenges to address.<br>
+8.	Highly feasible with very minor issues.<br>
+9.	Almost entirely feasible with rare and minor challenges.<br>
+10.	Completely feasible; can be implemented immediately without issues.<br>
+        </div>
+    </div>
+        <p>-Rate from 1 to 10 how feasible the solution is in terms of available technologies, resources, tools,
+            economic and/or legal feasibility.</p>
+    </div>
+      <input type="text" class="form-control" id="feasibility" placeholder="1-10" name="feasibility" min="1" max="10" required>
+
+   <!--
+    <label for="prevention">Mentions primary prevention (0/1):</label><br>
+    <select id="prevention" name="prevention">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+    </select><br>
+    <label for="detection">Mentions screening / early detection (0/1):</label><br>
+    <select id="detection" name="detection">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+    </select><br>
+    <label for="societies">Mentions professional societies/orgs (0/1):</label><br>
+    <select id="societies" name="societies">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+    </select><br>
+    <label for="involvement">Mentions patient involvement (0/1):</label><br>
+    <select id="involvement" name="involvement">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+    </select><br>
+    -->
+            <div class="mb-3">
+    <label for="red_flags" class="form-label"><strong>Red flags</strong></label>
+                <div class="info-container">
+                    <button class="info-button" type="button" onclick="yourFunction()">?</button>
+        <div class="info-popup">
+            0: Statement correct<br>
+            1: Interesting/odd output(Mark for in-detail examination/discussion)<br>
+            2: Statement wrong(mentions evidence-less therapy or plainly wrong statements)<br>
+        </div>
+    </div>
+                <p>-Rate the level of red flags from 0 to 2.</p>
+            </div>
+    <select id="red_flags" name="red_flags">
+        <option value="0" selected>0</option>
+        <option value="1" >1</option>
+        <option value="2" >2</option>
+    </select><br>
+
+                <input type="submit" value="Submit">
+
+    </div>
+    </div>
+</form>
+</body>
+</html>
