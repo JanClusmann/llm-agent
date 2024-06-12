@@ -1,0 +1,84 @@
+{
+    "NCT05358249": {
+        "Truhn": {
+            "Inclusion Criteria:|Dose Escalation:": "True",
+            "Inclusion Criteria:|- Patients with advanced (metastatic or unresectable) KRAS G12C mutant solid tumors who have received standard of care therapy or are ineligible to receive such therapy.": "True",
+            "Inclusion Criteria:|Phase II:": "True",
+            "Inclusion Criteria:|* Patients with advanced (metastatic or unresectable) KRAS G12C mutant non-small cell lung cancer who have received platinum-based chemotherapy regimen and immune checkpoint inhibitor therapy, unless patient was ineligible to receive such therapy": "True",
+            "Inclusion Criteria:|* Patients with advanced (metastatic or unresectable) KRAS G12C mutant colorectal cancer who have received fluropyrimidine-, oxaliplatin-, and irinotecan-based chemotherapy, unless patient was ineligible to such therapy.": "True",
+            "Inclusion Criteria:|All patients:": "True",
+            "Inclusion Criteria:|* ECOG performance status of 0 or 1.": "False",
+            "Inclusion Criteria:|* Patients must have a site of disease amenable to biopsy and be a candidate for tumor biopsy according to the treating institution's guidelines.": "False",
+            "Inclusion Criteria:|global": "False",
+            "Exclusion Criteria:|* Tumors harboring driver mutations that have approved targeted therapies, with the exception of KRAS G12C mutations": "True",
+            "Exclusion Criteria:|* Prior treatment with a KRAS G12C inhibitor is excluded for patients in a subset of groups in Phase II.": "True",
+            "Exclusion Criteria:|* Active brain metastases, including symptomatic brain metastases or known leptomeningeal disease": "True",
+            "Exclusion Criteria:|* Clinically significant cardiac disease or risk factors at screening": "True",
+            "Exclusion Criteria:|* Insufficient bone marrow, hepatic or renal function at screening Other protocol-defined inclusion/exclusion criteria may apply": "True"
+        }
+    },
+    "NCT04449874": {
+        "Truhn": {
+            "Inclusion Criteria:|* Histologically documented advanced or metastatic solid tumor with KRAS G12C mutation.": "True",
+            "Inclusion Criteria:|* Women of childbearing potential must agree to remain abstinent or use contraception, and agree to refrain from donating eggs during the treatment period and after the final dose of study treatment as specified in the protocol.": "True",
+            "Inclusion Criteria:|* Men who are not surgically sterile must agree to remain abstinent or use a condom, and agreement to refrain from donating sperm during the treatment period and after the final dose of study treatment as specified in the protocol.": "True",
+            "Exclusion Criteria:|* Active brain metastases.": "True",
+            "Exclusion Criteria:|* Malabsorption or other condition that interferes with enteral absorption.": "True",
+            "Exclusion Criteria:|* Clinically significant cardiovascular dysfunction or liver disease.": "True"
+        }
+    },
+    "NCT05054725": {
+        "Truhn": {
+            "Inclusion Criteria:|* Subject must be \u226518 years of age.": "False",
+            "Inclusion Criteria:|* Subject must have pathologically documented, locally advanced or metastatic KRASG12C NSCLC (not amenable to curative surgery) that has progressed on prior standard therapies (no more than 3 prior lines of therapies are allowed)": "True",
+            "Exclusion Criteria|* Primary central nervous system (CNS) tumors": "False",
+            "Exclusion Criteria|* Known or suspected leptomeningeal or brain metastases or spinal cord compression": "False",
+            "Exclusion Criteria|* Clinically significant cardiac disease": "True",
+            "Exclusion Criteria|* Known impairment of GI function that would alter the absorption": "True",
+            "Exclusion Criteria|* Active autoimmune disease requiring systemic treatment within past 2 years": "False",
+            "Exclusion Criteria|* History of severe allergic reactions to any of the study intervention components": "True",
+            "Exclusion Criteria|* Major surgical procedures within 28 days or non-study-related minor procedures within 7 days of treatment.": "True",
+            "Exclusion Criteria|* Prior therapy with KRASG12C inhibitor and/or SHP2 inhibitor": "True"
+        }
+    },
+    "NCT04933695": {
+        "Truhn": {
+            "Inclusion Criteria:|* Adult (= or \\> 18 years old) with NSCLC": "True",
+            "Inclusion Criteria:|* Untreated Stage IV metastatic disease. Participants who received adjuvant or neoadjuvant anti-tumor therapy are eligible if the adjuvant/neoadjuvant therapy was completed greater than 12 months prior to the development of metastatic stage IV disease": "True",
+            "Inclusion Criteria:|* Pathologically documented metastatic NSCLC with KRAS G12C mutation (local confirmation)": "False",
+            "Inclusion Criteria:|* Programmed death-ligand 1 (PD-L1) TPS Score \\< 1% and/or serine/threonine kinase 11 (STK11) co-mutation (local confirmation)": "?",
+            "Inclusion Criteria:|* Eastern Cooperative Oncology Group (ECOG) score of 0 or 1": "?",
+            "Inclusion Criteria:|* No active brain metastases": "?",
+            "Inclusion Criteria:|* Measurable disease per investigator interpretation using Response Evaluation Criteria in Solid Tumors (RECIST) 1.1 criteria": "False",
+            "Exclusion Criteria:|* Mixed small-cell lung cancer and NSCLC histology": "True",
+            "Exclusion Criteria:|* Myocardial Infarction within 6 months of study Day 1": "True",
+            "Exclusion Criteria:|* Use of proton-pump inhibitors (PPIs), histamine (H2) receptor antagonists (H2RA), strong inducers of cytochrome P450 (CYP) 3A4 (CYP3A4) or known CYP3A4 sensitive substrates or P-gp substrates": "True",
+            "Exclusion Criteria:|* Therapeutic or palliative radiation therapy within 2 weeks of study day 1": "False",
+            "Exclusion Criteria:|* Unable to take oral medication": "False",
+            "Exclusion Criteria:|* Unable to receive both iodinated contrast for computed tomography (CT) scans and gadolinium contrast for magnetic resonance imagine (MRI) scans": "True"
+        }
+    },
+    "NCT04685135": {
+        "Truhn": {
+            "Inclusion Criteria:|* Histologically or cytologically confirmed diagnosis of NSCLC with KRAS G12C mutation.": "True",
+            "Inclusion Criteria:|* Candidacy to receive treatment with docetaxel.": "False",
+            "Crossover Inclusion Criteria:|* Evidence of RECIST 1.1 defined disease progression on docetaxel per BICR": "False",
+            "Crossover Inclusion Criteria:|* ECOG performance status 0-2": "True",
+            "Exclusion Criteria:|* Prior treatment with an agent targeting KRAS G12C (e.g., AMG 510, Sotorasib).": "?",
+            "Exclusion Criteria:|* Active brain metastases.": "False",
+            "Crossover Exclusion Criteria:|* Receipt of any other systemic anti-cancer therapy after last administration of docetaxel on the study.": "True"
+        }
+    },
+    "NCT04699188": {
+        "Truhn": {
+            "Inclusion Criteria:|* Adult patients with advanced (metastatic or unresectable) KRAS G12C mutant solid tumors who have received standard of care or are intolerant or ineligible to approved therapies": "True",
+            "Inclusion Criteria:|* ECOG Performance Status of 0 or 1": "False",
+            "Inclusion Criteria:|* At least one measurable lesion as defined by RECIST 1.1": "False",
+            "Inclusion Criteria:|* Prior treatment with a KRAS G12C inhibitor may be allowed for dose escalations of combinations and a subset of groups in dose expansion": "False",
+            "Exclusion Criteria:|* Tumors harboring driver mutations that have approved targeted therapies, with the exception of KRAS G12C mutations": "True",
+            "Exclusion Criteria:|* Symptomatic brain metastases or known leptomeningeal disease. Patients with asymptomatic treated or untreated brain metastases may be eligible": "True",
+            "Exclusion Criteria:|* Clinically significant cardiac disease or risk factors at screening": "False",
+            "Exclusion Criteria:|* A medical condition that results in increased photosensitivity Other protocol-defined inclusion/exclusion criteria may apply.": "True"
+        }
+    }
+}
