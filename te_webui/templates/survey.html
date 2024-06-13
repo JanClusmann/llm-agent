@@ -75,7 +75,7 @@
                                                         <label for="{{ term }}|{{ item }}_unknown" class="radio-label">?</label>
                                                     </li>
                                                 {% elif item is iterable and not item is string %}
-                                                    <li class="nested-criteria">
+                                                    <div class="sublist-container">
                                                         <ul>
                                                             {% for subitem in item %}
                                                                 <li>
@@ -89,16 +89,16 @@
                                                                 </li>
                                                             {% endfor %}
                                                         </ul>
-                                                    </li>
-                                                    <li>
-                                                        <label>is the overall criterion met?</label><br>
-                                                        <input type="radio" id="{{ term }}|global_true" name="{{ term }}|global" value="True" {% if previous_results.get(term + '|global') == 'True' %}checked{% endif %}>
-                                                        <label for="{{ term }}|global_true" class="radio-label">True</label>
-                                                        <input type="radio" id="{{ term }}|global_false" name="{{ term }}|global" value="False" {% if previous_results.get(term + '|global') == 'False' %}checked{% endif %}>
-                                                        <label for="{{ term }}|global_false" class="radio-label">False</label>
-                                                        <input type="radio" id="{{ term }}|global_unknown" name="{{ term }}|global" value="?" {% if previous_results.get(term + '|global') == '?' %}checked{% endif %}>
-                                                        <label for="{{ term }}|global_unknown" class="radio-label">?</label>
-                                                    </li>
+                                                        <li>
+                                                            <label>is the overall criterion met?</label><br>
+                                                            <input type="radio" id="{{ term }}|global_true" name="{{ term }}|global" value="True" {% if previous_results.get(term + '|global') == 'True' %}checked{% endif %}>
+                                                            <label for="{{ term }}|global_true" class="radio-label">True</label>
+                                                            <input type="radio" id="{{ term }}|global_false" name="{{ term }}|global" value="False" {% if previous_results.get(term + '|global') == 'False' %}checked{% endif %}>
+                                                            <label for="{{ term }}|global_false" class="radio-label">False</label>
+                                                            <input type="radio" id="{{ term }}|global_unknown" name="{{ term }}|global" value="?" {% if previous_results.get(term + '|global') == '?' %}checked{% endif %}>
+                                                            <label for="{{ term }}|global_unknown" class="radio-label">?</label>
+                                                        </li>
+                                                    </div>
                                                 {% else %}
                                                     <li>Unknown criterion type: {{ item }}</li>
                                                 {% endif %}

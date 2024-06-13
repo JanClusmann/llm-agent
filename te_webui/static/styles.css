@@ -129,3 +129,11 @@ button:hover {
 .criteria-container {
     margin-top: 20px;
 }
+
+.sublist-container {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #e9ecef;
+}
