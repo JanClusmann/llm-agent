@@ -7,7 +7,7 @@ def read_json(file_path: str):
     return data
 
 reranked_trials_reloaded = read_json("/home/jeff/Downloads/ranked_trials.json")
-example_trial = reranked_trials_reloaded[0]
+example_trial = reranked_trials_reloaded[1]
 
 print(example_trial["nctId"])
 criteria = example_trial["structured_criteria"]

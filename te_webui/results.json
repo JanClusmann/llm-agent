@@ -15,6 +15,22 @@
             "Exclusion Criteria:|* Active brain metastases, including symptomatic brain metastases or known leptomeningeal disease": "True",
             "Exclusion Criteria:|* Clinically significant cardiac disease or risk factors at screening": "True",
             "Exclusion Criteria:|* Insufficient bone marrow, hepatic or renal function at screening Other protocol-defined inclusion/exclusion criteria may apply": "True"
+        },
+        "Unknown": {
+            "Inclusion Criteria:|Dose Escalation:": "True",
+            "Inclusion Criteria:|- Patients with advanced (metastatic or unresectable) KRAS G12C mutant solid tumors who have received standard of care therapy or are ineligible to receive such therapy.": "False",
+            "Inclusion Criteria:|Phase II:": "?",
+            "Inclusion Criteria:|* Patients with advanced (metastatic or unresectable) KRAS G12C mutant non-small cell lung cancer who have received platinum-based chemotherapy regimen and immune checkpoint inhibitor therapy, unless patient was ineligible to receive such therapy": "False",
+            "Inclusion Criteria:|* Patients with advanced (metastatic or unresectable) KRAS G12C mutant colorectal cancer who have received fluropyrimidine-, oxaliplatin-, and irinotecan-based chemotherapy, unless patient was ineligible to such therapy.": "False",
+            "Inclusion Criteria:|All patients:": "True",
+            "Inclusion Criteria:|* ECOG performance status of 0 or 1.": "False",
+            "Inclusion Criteria:|* Patients must have a site of disease amenable to biopsy and be a candidate for tumor biopsy according to the treating institution's guidelines.": "True",
+            "Inclusion Criteria:|global": "True",
+            "Exclusion Criteria:|* Tumors harboring driver mutations that have approved targeted therapies, with the exception of KRAS G12C mutations": "False",
+            "Exclusion Criteria:|* Prior treatment with a KRAS G12C inhibitor is excluded for patients in a subset of groups in Phase II.": "False",
+            "Exclusion Criteria:|* Active brain metastases, including symptomatic brain metastases or known leptomeningeal disease": "False",
+            "Exclusion Criteria:|* Clinically significant cardiac disease or risk factors at screening": "True",
+            "Exclusion Criteria:|* Insufficient bone marrow, hepatic or renal function at screening Other protocol-defined inclusion/exclusion criteria may apply": "?"
         }
     },
     "NCT04449874": {
@@ -79,6 +95,16 @@
             "Exclusion Criteria:|* Symptomatic brain metastases or known leptomeningeal disease. Patients with asymptomatic treated or untreated brain metastases may be eligible": "True",
             "Exclusion Criteria:|* Clinically significant cardiac disease or risk factors at screening": "False",
             "Exclusion Criteria:|* A medical condition that results in increased photosensitivity Other protocol-defined inclusion/exclusion criteria may apply.": "True"
+        },
+        "Kather": {
+            "Inclusion Criteria:|* Adult patients with advanced (metastatic or unresectable) KRAS G12C mutant solid tumors who have received standard of care or are intolerant or ineligible to approved therapies": "True",
+            "Inclusion Criteria:|* ECOG Performance Status of 0 or 1": "True",
+            "Inclusion Criteria:|* At least one measurable lesion as defined by RECIST 1.1": "True",
+            "Inclusion Criteria:|* Prior treatment with a KRAS G12C inhibitor may be allowed for dose escalations of combinations and a subset of groups in dose expansion": "True",
+            "Exclusion Criteria:|* Tumors harboring driver mutations that have approved targeted therapies, with the exception of KRAS G12C mutations": "False",
+            "Exclusion Criteria:|* Symptomatic brain metastases or known leptomeningeal disease. Patients with asymptomatic treated or untreated brain metastases may be eligible": "False",
+            "Exclusion Criteria:|* Clinically significant cardiac disease or risk factors at screening": "False",
+            "Exclusion Criteria:|* A medical condition that results in increased photosensitivity Other protocol-defined inclusion/exclusion criteria may apply.": "False"
         }
     }
 }

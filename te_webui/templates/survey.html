@@ -27,91 +27,92 @@
     </script>
 </head>
 <body>
-    <h1>Survey for Trial {{ trial['nctId'] }}</h1>
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
-    <form method="post" onsubmit="saveAuthor()">
-        <div class="container">
+    <div class="container">
+        <div class="title-container">
+            <h1>Survey for Trial {{ trial['nctId'] }}</h1>
+        </div>
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+        <div class="content">
             <div class="left-section">
-                <label for="author">Author:</label><br>
-                <select id="author" name="author" required>
-                    <option value="Schneider">Schneider</option>
-                    <option value="Clusmann">Clusmann</option>
-                    <option value="Kather">Kather</option>
-                    <option value="Truhn">Truhn</option>
-                    <option value="Isabella">Isabella</option>
-                    <option value="Dyke">Dyke</option>
-                </select><br>
+                <h2>Patient Description</h2>
+                <!-- This section is left for the user to fill out with patient description -->
+                <div class="author-selection">
+                    <label for="author">Author:</label><br>
+                    <select id="author" name="author" required>
+                        <option value="Schneider">Schneider</option>
+                        <option value="Clusmann">Clusmann</option>
+                        <option value="Kather">Kather</option>
+                        <option value="Truhn">Truhn</option>
+                        <option value="Isabella">Isabella</option>
+                        <option value="Dyke">Dyke</option>
+                    </select><br>
+                </div>
+            </div>
+            <div class="right-section">
+                <form method="post" onsubmit="saveAuthor()">
+                    <div class="criteria-section">
+                        {% for section, nested_criteria in trial['structured_criteria'].items() %}
+                            <h3>{{ section }}</h3>
+                            <p>Patients who meet all of the following criteria are eligible for trial participation:</p>
+                            <div class="criteria-container">
+                                {% for term, criteria_list in nested_criteria.items() %}
+                                    <div class="criteria-group">
+                                        <h4>{{ term }}</h4>
+                                        <ul>
+                                            {% set logic = criteria_list[0] %}
+                                            {% set real_criteria = criteria_list[1] %}
+                                            {% for item in real_criteria %}
+                                                {% if item is string %}
+                                                    <li>
+                                                        <label>{{ item }}</label><br>
+                                                        <input type="radio" id="{{ term }}|{{ item }}_true" name="{{ term }}|{{ item }}" value="True" {% if previous_results.get(term + '|' + item) == 'True' %}checked{% endif %}>
+                                                        <label for="{{ term }}|{{ item }}_true" class="radio-label">True</label>
+                                                        <input type="radio" id="{{ term }}|{{ item }}_false" name="{{ term }}|{{ item }}" value="False" {% if previous_results.get(term + '|' + item) == 'False' %}checked{% endif %}>
+                                                        <label for="{{ term }}|{{ item }}_false" class="radio-label">False</label>
+                                                        <input type="radio" id="{{ term }}|{{ item }}_unknown" name="{{ term }}|{{ item }}" value="?" {% if previous_results.get(term + '|' + item) == '?' %}checked{% endif %}>
+                                                        <label for="{{ term }}|{{ item }}_unknown" class="radio-label">?</label>
+                                                    </li>
+                                                {% elif item is iterable and not item is string %}
+                                                    <li class="nested-criteria">
+                                                        <ul>
+                                                            {% for subitem in item %}
+                                                                <li>
+                                                                    <label>{{ subitem }}</label><br>
+                                                                    <input type="radio" id="{{ term }}|{{ subitem }}_true" name="{{ term }}|{{ subitem }}" value="True" {% if previous_results.get(term + '|' + subitem) == 'True' %}checked{% endif %}>
+                                                                    <label for="{{ term }}|{{ subitem }}_true" class="radio-label">True</label>
+                                                                    <input type="radio" id="{{ term }}|{{ subitem }}_false" name="{{ term }}|{{ subitem }}" value="False" {% if previous_results.get(term + '|' + subitem) == 'False' %}checked{% endif %}>
+                                                                    <label for="{{ term }}|{{ subitem }}_false" class="radio-label">False</label>
+                                                                    <input type="radio" id="{{ term }}|{{ subitem }}_unknown" name="{{ term }}|{{ subitem }}" value="?" {% if previous_results.get(term + '|' + subitem) == '?' %}checked{% endif %}>
+                                                                    <label for="{{ term }}|{{ subitem }}_unknown" class="radio-label">?</label>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <label>is the overall criterion met?</label><br>
+                                                        <input type="radio" id="{{ term }}|global_true" name="{{ term }}|global" value="True" {% if previous_results.get(term + '|global') == 'True' %}checked{% endif %}>
+                                                        <label for="{{ term }}|global_true" class="radio-label">True</label>
+                                                        <input type="radio" id="{{ term }}|global_false" name="{{ term }}|global" value="False" {% if previous_results.get(term + '|global') == 'False' %}checked{% endif %}>
+                                                        <label for="{{ term }}|global_false" class="radio-label">False</label>
+                                                        <input type="radio" id="{{ term }}|global_unknown" name="{{ term }}|global" value="?" {% if previous_results.get(term + '|global') == '?' %}checked{% endif %}>
+                                                        <label for="{{ term }}|global_unknown" class="radio-label">?</label>
+                                                    </li>
+                                                {% else %}
+                                                    <li>Unknown criterion type: {{ item }}</li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
             </div>
         </div>
-        {% for section, nested_criteria in trial['structured_criteria'].items() %}
-            <h3>{{ section }}</h3>
-            <ul>
-                {% for term, criteria_list in nested_criteria.items() %}
-                    <li>{{ term }}</li>
-                    <ul>
-                        {% set logic = criteria_list[0] %}
-                        {% set real_criteria = criteria_list[1] %}
-                        {% for item in real_criteria %}
-                            {% if item is string %}
-                                <li>
-                                    <label>{{ item }}</label><br>
-                                    <label>
-                                        <input type="radio" name="{{ term }}|{{ item }}" value="True"
-                                            {% if previous_results.get(term + '|' + item) == 'True' %}checked{% endif %}> True
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="{{ term }}|{{ item }}" value="False"
-                                            {% if previous_results.get(term + '|' + item) == 'False' %}checked{% endif %}> False
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="{{ term }}|{{ item }}" value="?"
-                                            {% if previous_results.get(term + '|' + item) == '?' %}checked{% endif %}> ?
-                                    </label>
-                                </li>
-                            {% elif item is iterable and not item is string %}
-                                {% for subitem in item %}
-                                    <li>
-                                        <label>{{ subitem }}</label><br>
-                                        <label>
-                                            <input type="radio" name="{{ term }}|{{ subitem }}" value="True"
-                                                {% if previous_results.get(term + '|' + subitem) == 'True' %}checked{% endif %}> True
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="{{ term }}|{{ subitem }}" value="False"
-                                                {% if previous_results.get(term + '|' + subitem) == 'False' %}checked{% endif %}> False
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="{{ term }}|{{ subitem }}" value="?"
-                                                {% if previous_results.get(term + '|' + subitem) == '?' %}checked{% endif %}> ?
-                                        </label>
-                                    </li>
-                                {% endfor %}
-                                <li>
-                                    <label>is the overall criterion met?</label><br>
-                                    <label>
-                                        <input type="radio" name="{{ term }}|global" value="True"
-                                            {% if previous_results.get(term + '|global') == 'True' %}checked{% endif %}> True
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="{{ term }}|global" value="False"
-                                            {% if previous_results.get(term + '|global') == 'False' %}checked{% endif %}> False
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="{{ term }}|global" value="?"
-                                            {% if previous_results.get(term + '|global') == '?' %}checked{% endif %}> ?
-                                    </label>
-                                </li>
-                            {% else %}
-                                <li>Unknown criterion type: {{ item }}</li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-        <button type="submit">Submit</button>
-    </form>
+    </div>
 </body>
 </html>
