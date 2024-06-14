@@ -38,7 +38,17 @@ def survey():
 
     if request.method == 'POST':
         results = request.form.to_dict()
-        author = results.get('author', 'Unknown')
+
+        author = results.get('author', None)
+
+        # Log author for debugging
+        # print(f"Author: {author}")
+
+        # Add a validation check for the author
+        if not author:
+            error_message = "Please select an author before submitting."
+            return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
+
 
         # Check if all criteria are filled
         missing_items = []
@@ -50,18 +60,20 @@ def survey():
                         key = f"{term}|{item}"
                         if key not in results:
                             missing_items.append(item)
-                    elif isinstance(item, list):
-                        for subitem in item:
-                            key = f"{term}|{subitem}"
-                            if key not in results:
-                                missing_items.append(subitem)
-                        key = f"{term}|global"
-                        if key not in results:
-                            missing_items.append("is the overall criterion met?")
+                        elif isinstance(item, list):
+                            for i, subitem in enumerate(item, start=1):
+                                key = f"{term}|{subitem}"
+                                if key not in results:
+                                    missing_items.append(subitem)
+                                unique_id = f"{term}_global{i}"
+                                key_true = f"{unique_id}_true"
+                                key_false = f"{unique_id}_false"
+                                key_unknown = f"{unique_id}_unknown"
+                                if key_true not in results or key_false not in results or key_unknown not in results:
+                                    missing_items.append("is the overall criterion met?")
 
         if missing_items:
-            #error_message = "Please answer all questions before submitting. Missing items: " + ", ".join(missing_items)
-            error_message = "Please answer all questions before submitting."
+            error_message = "Please answer all questions before submitting. Missing items: " + ", ".join(missing_items)
             return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
 
         # Load existing results
@@ -103,4 +115,4 @@ def change_author():
     return redirect('/')
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5002)

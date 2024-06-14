@@ -9,6 +9,7 @@
         // Load author from local storage when the page loads
         var author = localStorage.getItem('author');
         if (author) {
+            console.log('Author loaded from local storage:', author)
             var select = document.getElementById('author');
             for (var i = 0; i < select.options.length; i++) {
                 if (select.options[i].value === author) {
@@ -23,6 +24,7 @@
         // Save author to local storage when the form is submitted
         var author = document.getElementById('author').value;
         localStorage.setItem('author', author);
+        console.log('Author saved to local storage:', author);
     }
     </script>
 </head>
@@ -30,17 +32,7 @@
     <div class="container">
         <div class="title-container">
             <h1>Survey for Trial {{ trial['nctId'] }}</h1>
-            <div class="author-selection">
-                <label for="author">Author:</label><br>
-                <select id="author" name="author" required>
-                    <option value="Schneider">Schneider</option>
-                    <option value="Clusmann">Clusmann</option>
-                    <option value="Kather">Kather</option>
-                    <option value="Truhn">Truhn</option>
-                    <option value="Isabella">Isabella</option>
-                    <option value="Dyke">Dyke</option>
-                </select><br>
-            </div>
+
         </div>
         {% if error_message %}
             <p class="error-message">{{ error_message }}</p>
@@ -54,9 +46,25 @@
             </div>
             <div class="left-section">
                 <form method="post" onsubmit="saveAuthor()">
+                    <div class="author-selection">
+        <label for="author">Author:</label><br>
+        <select id="author" name="author" required>
+            <option value="Schneider">Schneider</option>
+            <option value="Clusmann">Clusmann</option>
+            <option value="Kather">Kather</option>
+            <option value="Truhn">Truhn</option>
+            <option value="Isabella">Isabella</option>
+            <option value="Dyke">Dyke</option>
+        </select><br>
+    </div>
                     <div class="criteria-section">
                         {% for section, nested_criteria in trial['structured_criteria'].items() %}
-                            <p>Patients who meet all of the following criteria are eligible for trial participation:</p>
+                            {% if 'Inclusion Criteria:' in nested_criteria %}
+                                <h3>{{ nested_criteria['Inclusion Criteria:'][0] }}</h3>
+                            {% endif %}
+                            {% if 'Exclusion Criteria:' in nested_criteria %}
+                                <h3>{{ nested_criteria['Exclusion Criteria:'][0] }}</h3>
+                            {% endif %}
                             <div class="criteria-container">
                                 {% for term, criteria_list in nested_criteria.items() %}
                                     <div class="criteria-group">
@@ -90,14 +98,15 @@
                                                                 </li>
                                                             {% endfor %}
                                                         </ul>
+    {% set unique_id = term + '_global' + loop.index|string %}
                                                         <li>
                                                             <label>is the overall criterion met?</label><br>
-                                                            <input type="radio" id="{{ term }}|global_true" name="{{ term }}|global" value="True" {% if previous_results.get(term + '|global') == 'True' %}checked{% endif %}>
-                                                            <label for="{{ term }}|global_true" class="radio-label">True</label>
-                                                            <input type="radio" id="{{ term }}|global_false" name="{{ term }}|global" value="False" {% if previous_results.get(term + '|global') == 'False' %}checked{% endif %}>
-                                                            <label for="{{ term }}|global_false" class="radio-label">False</label>
-                                                            <input type="radio" id="{{ term }}|global_unknown" name="{{ term }}|global" value="?" {% if previous_results.get(term + '|global') == '?' %}checked{% endif %}>
-                                                            <label for="{{ term }}|global_unknown" class="radio-label">?</label>
+                                                            <input type="radio" id="{{ unique_id }}_true" name="{{ unique_id }}" value="True" {% if previous_results.get(unique_id) == 'True' %}checked{% endif %}>
+                                                            <label for="{{ unique_id }}_true" class="radio-label">True</label>
+                                                            <input type="radio" id="{{ unique_id }}_false" name="{{ unique_id }}" value="False" {% if previous_results.get(unique_id) == 'False' %}checked{% endif %}>
+                                                            <label for="{{ unique_id }}_false" class="radio-label">False</label>
+                                                            <input type="radio" id="{{ unique_id }}_unknown" name="{{ unique_id }}" value="?" {% if previous_results.get(unique_id) == '?' %}checked{% endif %}>
+                                                            <label for="{{ unique_id }}_unknown" class="radio-label">?</label>
                                                         </li>
                                                     </div>
                                                 {% else %}
