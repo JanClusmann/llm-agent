@@ -30,31 +30,32 @@
     <div class="container">
         <div class="title-container">
             <h1>Survey for Trial {{ trial['nctId'] }}</h1>
+            <div class="author-selection">
+                <label for="author">Author:</label><br>
+                <select id="author" name="author" required>
+                    <option value="Schneider">Schneider</option>
+                    <option value="Clusmann">Clusmann</option>
+                    <option value="Kather">Kather</option>
+                    <option value="Truhn">Truhn</option>
+                    <option value="Isabella">Isabella</option>
+                    <option value="Dyke">Dyke</option>
+                </select><br>
+            </div>
         </div>
         {% if error_message %}
             <p class="error-message">{{ error_message }}</p>
         {% endif %}
         <div class="content">
-            <div class="left-section">
+            <div class="right-section">
                 <h2>Patient Description</h2>
-                <!-- This section is left for the user to fill out with patient description -->
-                <div class="author-selection">
-                    <label for="author">Author:</label><br>
-                    <select id="author" name="author" required>
-                        <option value="Schneider">Schneider</option>
-                        <option value="Clusmann">Clusmann</option>
-                        <option value="Kather">Kather</option>
-                        <option value="Truhn">Truhn</option>
-                        <option value="Isabella">Isabella</option>
-                        <option value="Dyke">Dyke</option>
-                    </select><br>
+                <div class="patient-info">
+                    {{ trial['patient_info'] | nl2br | safe }}
                 </div>
             </div>
-            <div class="right-section">
+            <div class="left-section">
                 <form method="post" onsubmit="saveAuthor()">
                     <div class="criteria-section">
                         {% for section, nested_criteria in trial['structured_criteria'].items() %}
-                            <h3>{{ section }}</h3>
                             <p>Patients who meet all of the following criteria are eligible for trial participation:</p>
                             <div class="criteria-container">
                                 {% for term, criteria_list in nested_criteria.items() %}

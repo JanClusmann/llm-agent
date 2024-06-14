@@ -160,5 +160,14 @@
             "Exclusion Criteria:|* Clinically significant cardiac disease or risk factors at screening": "False",
             "Exclusion Criteria:|* A medical condition that results in increased photosensitivity Other protocol-defined inclusion/exclusion criteria may apply.": "False"
         }
+    },
+    "NCT03600883": {
+        "Unknown": {
+            "Inclusion Criteria:|* Men or women greater than or equal to 18 years old.": "True",
+            "Inclusion Criteria:|* Pathologically documented, locally-advanced or metastatic malignancy with, KRAS p.G12C mutation identified through molecular testing.": "True",
+            "Exclusion Criteria|* Active brain metastases from non-brain tumors.": "True",
+            "Exclusion Criteria|* Myocardial infarction within 6 months of study day 1.": "True",
+            "Exclusion Criteria|* Gastrointestinal (GI) tract disease causing the inability to take oral medication.": "True"
+        }
     }
 }

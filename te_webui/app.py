@@ -15,7 +15,12 @@ def read_json(file_path: str):
     return data
 
 # Load the JSON data
-reranked_trials_reloaded = read_json(os.path.join(script_dir, "ranked_trials.json"))
+reranked_trials_reloaded = read_json(os.path.join(script_dir, "p6_evaluated_trials_0.json"))
+
+# Custom filter to replace newlines with <br> tags
+@app.template_filter('nl2br')
+def nl2br(value):
+    return value.replace('\n', '<br>')
 
 @app.route('/', methods=['GET', 'POST'])
 def survey():
@@ -55,7 +60,8 @@ def survey():
                             missing_items.append("is the overall criterion met?")
 
         if missing_items:
-            error_message = "Please answer all questions before submitting. Missing items: " + ", ".join(missing_items)
+            #error_message = "Please answer all questions before submitting. Missing items: " + ", ".join(missing_items)
+            error_message = "Please answer all questions before submitting."
             return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
 
         # Load existing results
