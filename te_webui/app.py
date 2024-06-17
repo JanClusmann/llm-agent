@@ -38,17 +38,12 @@ def survey():
 
     if request.method == 'POST':
         results = request.form.to_dict()
-
         author = results.get('author', None)
-
-        # Log author for debugging
-        # print(f"Author: {author}")
 
         # Add a validation check for the author
         if not author:
             error_message = "Please select an author before submitting."
             return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
-
 
         # Check if all criteria are filled
         missing_items = []
@@ -60,17 +55,14 @@ def survey():
                         key = f"{term}|{item}"
                         if key not in results:
                             missing_items.append(item)
-                        elif isinstance(item, list):
-                            for i, subitem in enumerate(item, start=1):
-                                key = f"{term}|{subitem}"
-                                if key not in results:
-                                    missing_items.append(subitem)
-                                unique_id = f"{term}_global{i}"
-                                key_true = f"{unique_id}_true"
-                                key_false = f"{unique_id}_false"
-                                key_unknown = f"{unique_id}_unknown"
-                                if key_true not in results or key_false not in results or key_unknown not in results:
-                                    missing_items.append("is the overall criterion met?")
+                    elif isinstance(item, list):
+                        for subitem in item:
+                            key = f"{term}|{subitem}"
+                            if key not in results:
+                                missing_items.append(subitem)
+                        unique_id = f"{term}_global{real_criteria.index(item) + 1}"
+                        if unique_id not in results:
+                            missing_items.append("is the overall criterion met?")
 
         if missing_items:
             error_message = "Please answer all questions before submitting. Missing items: " + ", ".join(missing_items)
@@ -90,10 +82,31 @@ def survey():
             error_message = f"Author {author} has already submitted results for trial {nctId}."
             return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
 
-        # Save the new results
+        # Save the new results, preserving the original nested structure
         if nctId not in all_results:
             all_results[nctId] = {}
-        all_results[nctId][author] = {k: v for k, v in results.items() if k != 'author'}
+
+        structured_results = {}
+        for section, nested_criteria in trial['structured_criteria'].items():
+            structured_results[section] = {}
+            for term, criteria_list in nested_criteria.items():
+                real_criteria = criteria_list[1]
+                structured_results[section][term] = [criteria_list[0], []]
+                for item in real_criteria:
+                    if isinstance(item, str):
+                        key = f"{term}|{item}"
+                        structured_results[section][term][1].append(results[key])
+                    elif isinstance(item, list):
+                        sublist = []
+                        for subitem in item:
+                            key = f"{term}|{subitem}"
+                            sublist.append(results[key])
+                        structured_results[section][term][1].append(sublist)
+                        unique_id = f"{term}_global{real_criteria.index(item) + 1}"
+                        if unique_id in results:
+                            structured_results[section][term][1].append(results[unique_id])
+
+        all_results[nctId][author] = structured_results
 
         with open(results_filename, 'w') as f:
             json.dump(all_results, f, indent=4)
