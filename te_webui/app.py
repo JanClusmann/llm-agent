@@ -86,6 +86,26 @@ def survey():
         if nctId not in all_results:
             all_results[nctId] = {}
 
+        # structured_results = {}
+        # for section, nested_criteria in trial['structured_criteria'].items():
+        #     structured_results[section] = {}
+        #     for term, criteria_list in nested_criteria.items():
+        #         real_criteria = criteria_list[1]
+        #         structured_results[section][term] = [criteria_list[0], []]
+        #         for item in real_criteria:
+        #             if isinstance(item, str):
+        #                 key = f"{term}|{item}"
+        #                 structured_results[section][term][1].append(results[key])
+        #             elif isinstance(item, list):
+        #                 sublist = []
+        #                 for subitem in item:
+        #                     key = f"{term}|{subitem}"
+        #                     sublist.append(results[key])
+        #                 structured_results[section][term][1].append(sublist)
+        #                 unique_id = f"{term}_global{real_criteria.index(item) + 1}"
+        #                 if unique_id in results:
+        #                     structured_results[section][term][1].append(results[unique_id])
+
         structured_results = {}
         for section, nested_criteria in trial['structured_criteria'].items():
             structured_results[section] = {}
@@ -95,16 +115,16 @@ def survey():
                 for item in real_criteria:
                     if isinstance(item, str):
                         key = f"{term}|{item}"
-                        structured_results[section][term][1].append(results[key])
+                        structured_results[section][term][1].append((results[key], item))
                     elif isinstance(item, list):
                         sublist = []
                         for subitem in item:
                             key = f"{term}|{subitem}"
-                            sublist.append(results[key])
+                            sublist.append((results[key], subitem))
                         structured_results[section][term][1].append(sublist)
                         unique_id = f"{term}_global{real_criteria.index(item) + 1}"
                         if unique_id in results:
-                            structured_results[section][term][1].append(results[unique_id])
+                            structured_results[section][term][1].append((results[unique_id], "Is the global criterion met?"))
 
         all_results[nctId][author] = structured_results
 
