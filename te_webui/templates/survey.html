@@ -41,6 +41,10 @@
         {% endif %}
         <div class="content">
             <div class="right-section">
+                <h2>Patient ID</h2>
+                <div class="patient-id">
+                    {{ trial['patient_id'] }}
+                </div>
                 <h2>Patient Description</h2>
                 <div class="patient-info">
                     {{ trial['patient_info'] | nl2br | safe }}
@@ -77,14 +81,15 @@
                                     {% if item is string %}
                                     <li>
                                         <label>{{ item }}</label><br>
-                                        <input type="radio" id="{{ term }}|{{ item }}_true" name="{{ term }}|{{ item }}"
-                                            value="True" {% if previous_results.get(term + '|' + item)=='True'
-                                            %}checked{% endif %}>
-                                        <label for="{{ term }}|{{ item }}_true" class="radio-label">True</label>
-                                        <input type="radio" id="{{ term }}|{{ item }}_false"
+                                        <input type="radio" id="{{ term }}|{{ item }}_eligible"
+                                            name="{{ term }}|{{ item }}" value="True" {% if previous_results.get(term
+                                            + '|' + item)=='True' %}checked{% endif %}>
+                                        <label for="{{ term }}|{{ item }}_eligible" class="radio-label">Eligible</label>
+                                        <input type="radio" id="{{ term }}|{{ item }}_not_eligible"
                                             name="{{ term }}|{{ item }}" value="False" {% if previous_results.get(term
                                             + '|' + item)=='False' %}checked{% endif %}>
-                                        <label for="{{ term }}|{{ item }}_false" class="radio-label">False</label>
+                                        <label for="{{ term }}|{{ item }}_not_eligible" class="radio-label">Not
+                                            Eligible</label>
                                         <input type="radio" id="{{ term }}|{{ item }}_unknown"
                                             name="{{ term }}|{{ item }}" value="?" {% if previous_results.get(term + '|'
                                             + item)=='?' %}checked{% endif %}>
@@ -96,18 +101,18 @@
                                             {% for subitem in item %}
                                             <li>
                                                 <label>{{ subitem }}</label><br>
-                                                <input type="radio" id="{{ term }}|{{ subitem }}_true"
+                                                <input type="radio" id="{{ term }}|{{ subitem }}_eligible"
                                                     name="{{ term }}|{{ subitem }}" value="True" {% if
                                                     previous_results.get(term + '|' + subitem)=='True' %}checked{% endif
                                                     %}>
-                                                <label for="{{ term }}|{{ subitem }}_true"
-                                                    class="radio-label">True</label>
-                                                <input type="radio" id="{{ term }}|{{ subitem }}_false"
+                                                <label for="{{ term }}|{{ subitem }}_eligible"
+                                                    class="radio-label">Eligible</label>
+                                                <input type="radio" id="{{ term }}|{{ subitem }}_not_eligible"
                                                     name="{{ term }}|{{ subitem }}" value="False" {% if
                                                     previous_results.get(term + '|' + subitem)=='False' %}checked{%
                                                     endif %}>
-                                                <label for="{{ term }}|{{ subitem }}_false"
-                                                    class="radio-label">False</label>
+                                                <label for="{{ term }}|{{ subitem }}_not_eligible"
+                                                    class="radio-label">Not Eligible</label>
                                                 <input type="radio" id="{{ term }}|{{ subitem }}_unknown"
                                                     name="{{ term }}|{{ subitem }}" value="?" {% if
                                                     previous_results.get(term + '|' + subitem)=='?' %}checked{% endif
@@ -119,15 +124,16 @@
                                         </ul>
                                         {% set unique_id = term + '_global' + loop.index|string %}
                                         <li>
-                                            <label>is the overall criterion met?</label><br>
-                                            <input type="radio" id="{{ unique_id }}_true" name="{{ unique_id }}"
+                                            <label>Is the global criterion met? (Patient is eligible?)</label><br>
+                                            <input type="radio" id="{{ unique_id }}_eligible" name="{{ unique_id }}"
                                                 value="True" {% if previous_results.get(unique_id)=='True' %}checked{%
                                                 endif %}>
-                                            <label for="{{ unique_id }}_true" class="radio-label">True</label>
-                                            <input type="radio" id="{{ unique_id }}_false" name="{{ unique_id }}"
+                                            <label for="{{ unique_id }}_eligible" class="radio-label">Eligible</label>
+                                            <input type="radio" id="{{ unique_id }}_not_eligible" name="{{ unique_id }}"
                                                 value="False" {% if previous_results.get(unique_id)=='False' %}checked{%
                                                 endif %}>
-                                            <label for="{{ unique_id }}_false" class="radio-label">False</label>
+                                            <label for="{{ unique_id }}_not_eligible" class="radio-label">Not
+                                                Eligible</label>
                                             <input type="radio" id="{{ unique_id }}_unknown" name="{{ unique_id }}"
                                                 value="?" {% if previous_results.get(unique_id)=='?' %}checked{% endif
                                                 %}>

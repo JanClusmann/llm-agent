@@ -15,7 +15,7 @@ def read_json(file_path: str):
     return data
 
 # Load the JSON data
-reranked_trials_reloaded = read_json(os.path.join(script_dir, "p6_evaluated_trials_0.json"))
+reranked_trials_reloaded = read_json(os.path.join(script_dir, "merged_evaluations.json"))
 
 # Custom filter to replace newlines with <br> tags
 @app.template_filter('nl2br')
@@ -38,12 +38,12 @@ def survey():
 
     if request.method == 'POST':
         results = request.form.to_dict()
-        author = results.get('author', None)
+        # author = results.get('author', None)
 
-        # Add a validation check for the author
-        if not author:
-            error_message = "Please select an author before submitting."
-            return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
+        # # Add a validation check for the author
+        # if not author:
+        #     error_message = "Please select an author before submitting."
+        #     return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
 
         # Check if all criteria are filled
         missing_items = []
@@ -77,36 +77,21 @@ def survey():
             all_results = {}
 
         # Check if the author already submitted results for this nctId
-        nctId = trial['nctId']
-        if nctId in all_results and author in all_results[nctId]:
-            error_message = f"Author {author} has already submitted results for trial {nctId}."
-            return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
+        patient_id = trial['patient_id']
+        # if patient_id in all_results and author in all_results[patient_id]:
+        #     error_message = f"Author {author} has already submitted results for trial {patient_id}."
+        #     return render_template('survey.html', trial=trial, error_message=error_message, previous_results=results)
 
         # Save the new results, preserving the original nested structure
-        if nctId not in all_results:
-            all_results[nctId] = {}
+        if patient_id not in all_results:
+            all_results[patient_id] = []
 
-        # structured_results = {}
-        # for section, nested_criteria in trial['structured_criteria'].items():
-        #     structured_results[section] = {}
-        #     for term, criteria_list in nested_criteria.items():
-        #         real_criteria = criteria_list[1]
-        #         structured_results[section][term] = [criteria_list[0], []]
-        #         for item in real_criteria:
-        #             if isinstance(item, str):
-        #                 key = f"{term}|{item}"
-        #                 structured_results[section][term][1].append(results[key])
-        #             elif isinstance(item, list):
-        #                 sublist = []
-        #                 for subitem in item:
-        #                     key = f"{term}|{subitem}"
-        #                     sublist.append(results[key])
-        #                 structured_results[section][term][1].append(sublist)
-        #                 unique_id = f"{term}_global{real_criteria.index(item) + 1}"
-        #                 if unique_id in results:
-        #                     structured_results[section][term][1].append(results[unique_id])
-
-        structured_results = {}
+        structured_results = {
+            "nctId": trial['nctId'],
+            'patient_id': patient_id,
+        #    'author': author,
+        }
+        
         for section, nested_criteria in trial['structured_criteria'].items():
             structured_results[section] = {}
             for term, criteria_list in nested_criteria.items():
@@ -121,12 +106,34 @@ def survey():
                         for subitem in item:
                             key = f"{term}|{subitem}"
                             sublist.append((results[key], subitem))
-                        structured_results[section][term][1].append(sublist)
                         unique_id = f"{term}_global{real_criteria.index(item) + 1}"
                         if unique_id in results:
-                            structured_results[section][term][1].append((results[unique_id], "Is the global criterion met?"))
+                            sublist.append((results[unique_id], "***global***"))
+                        structured_results[section][term][1].append(sublist)
 
-        all_results[nctId][author] = structured_results
+
+        # for section, nested_criteria in trial['structured_criteria'].items():
+        #     structured_results[section] = {}
+        #     for term, criteria_list in nested_criteria.items():
+        #         real_criteria = criteria_list[1]
+        #         structured_results[section][term] = [criteria_list[0], []]
+        #         for item in real_criteria:
+        #             if isinstance(item, str):
+        #                 key = f"{term}|{item}"
+        #                 structured_results[section][term][1].append((results[key], item))
+        #             elif isinstance(item, list):
+        #                 sublist = []
+        #                 for subitem in item:
+        #                     key = f"{term}|{subitem}"
+        #                     sublist.append((results[key], subitem))
+        #                 unique_id = f"{term}_global{real_criteria.index(item) + 1}"
+        #                 if unique_id in results:
+        #                     sublist.append((results[unique_id], "***global***"))
+        #                 structured_results[section][term][1].append(sublist)
+
+
+
+        all_results[patient_id].append(structured_results)
 
         with open(results_filename, 'w') as f:
             json.dump(all_results, f, indent=4)
@@ -148,4 +155,4 @@ def change_author():
     return redirect('/')
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5003)
