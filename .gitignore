@@ -10233,3 +10233,8 @@ plots/*.png
 /generator/API_KEY
 /llm-agent/
 .idea/
+
+
+
+
+results.json
