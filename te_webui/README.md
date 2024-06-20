@@ -70,6 +70,32 @@ Make sure you have the following installed:
     python te_webui/app.py
     ```
 
+## Finishing Up
+
+After you have finished evaluating and testing the application, consider pushing your changes or any improvements back to the repository. Follow these steps:
+
+1. **Add your changes**
+
+    ```sh
+    git add .
+    ```
+
+2. **Commit your changes**
+
+    ```sh
+    git commit -m "Your descriptive commit message"
+    ```
+
+3. **Push your changes**
+
+    ```sh
+    git push origin exp_trail_evaluations
+    ```
+
+
+If you are not a contributor to the repository, consider forking the repository and submitting a pull request with your changes.
+
+
 ## Usage
 
 After running the above command, the web application should be accessible in your web browser. Open your browser and navigate to the URL provided in the terminal.
