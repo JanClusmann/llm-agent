@@ -50,12 +50,10 @@ h2, h3 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 45%;
+    overflow-y: scroll;
+    max-height: 800px;  /* Increased height for the patient info */
 }
 
-.right-section {
-    max-height: 700px;  /* Increased height for the right section */
-    overflow-y: scroll;
-}
 
 form {
     display: flex;
@@ -70,6 +68,8 @@ form {
 .criteria-section li {
     margin-bottom: 10px;
 }
+
+
 
 label {
     display: block;
@@ -146,8 +146,7 @@ button:hover {
 }
 
 .patient-info {
-    max-height: 650px;  /* Increased height for the patient info */
-    overflow-y: scroll;
+    max-height: 700px;  /* Increased height for the patient info */
     white-space: pre-wrap; /* Ensure newlines are respected */
 }
 
