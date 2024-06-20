@@ -55,6 +55,62 @@
                     ]
                 ]
             }
+        },
+        {
+            "nctId": "NCT04685135",
+            "patient_id": "6_2_fm",
+            "inclusion": {
+                "Inclusion Criteria:": [
+                    "Patients who meet all of the following criteria are eligible for trial participation: ",
+                    [
+                        [
+                            "True",
+                            "* Histologically or cytologically confirmed diagnosis of NSCLC with KRAS G12C mutation."
+                        ],
+                        [
+                            "True",
+                            "* Candidacy to receive treatment with docetaxel."
+                        ]
+                    ]
+                ],
+                "Crossover Inclusion Criteria:": [
+                    "Patients who meet all of the following criteria are eligible for trial participation: ",
+                    [
+                        [
+                            "False",
+                            "* Evidence of RECIST 1.1 defined disease progression on docetaxel per BICR"
+                        ],
+                        [
+                            "True",
+                            "* ECOG performance status 0-2"
+                        ]
+                    ]
+                ]
+            },
+            "exclusion": {
+                "Exclusion Criteria:": [
+                    "Patients who meet any of the following criteria are not eligible for trial participation: ",
+                    [
+                        [
+                            "True",
+                            "* Prior treatment with an agent targeting KRAS G12C (e.g., AMG 510, Sotorasib)."
+                        ],
+                        [
+                            "True",
+                            "* Active brain metastases."
+                        ]
+                    ]
+                ],
+                "Crossover Exclusion Criteria:": [
+                    "Patients who meet any of the following criteria are not eligible for trial participation: ",
+                    [
+                        [
+                            "True",
+                            "* Receipt of any other systemic anti-cancer therapy after last administration of docetaxel on the study."
+                        ]
+                    ]
+                ]
+            }
         }
     ],
     "1_1_fm": [
