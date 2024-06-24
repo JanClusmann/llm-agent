@@ -36,26 +36,26 @@
             <h1>Survey for Trial {{ trial['nctId'] }}</h1>
         </div>
 
-    <div class="supply_info">
-                    {% if trial['trial'].get('officialTitle') %}
-                <h2>Official Title</h2>
-                <div class="trial-info">
-                    {{ trial['trial']['officialTitle'] | nl2br | safe }}
-                </div>
-                {% endif %}
-                {% if trial['trial'].get('briefSummary') %}
-                <h2>Brief Summary</h2>
-                <div class="trial-info">
-                    {{ trial['trial']['briefSummary'] | nl2br | safe }}
-                </div>
-                {% endif %}
-                {% if trial['trial'].get('detailedDescription') %}
-                <h2>Detailed Description</h2>
-                <div class="trial-info">
-                    {{ trial['trial']['detailedDescription'] | nl2br | safe }}
-                </div>
-                {% endif %}
-    </div>
+        <div class="supply_info">
+            {% if trial['trial'].get('officialTitle') %}
+            <h2>Official Title</h2>
+            <div class="trial-info">
+                {{ trial['trial']['officialTitle'] | nl2br | safe }}
+            </div>
+            {% endif %}
+            {% if trial['trial'].get('briefSummary') %}
+            <h2>Brief Summary</h2>
+            <div class="trial-info">
+                {{ trial['trial']['briefSummary'] | nl2br | safe }}
+            </div>
+            {% endif %}
+            {% if trial['trial'].get('detailedDescription') %}
+            <h2>Detailed Description</h2>
+            <div class="trial-info">
+                {{ trial['trial']['detailedDescription'] | nl2br | safe }}
+            </div>
+            {% endif %}
+        </div>
         {% if error_message %}
         <p class="error-message">{{ error_message }}</p>
         {% endif %}
@@ -80,6 +80,7 @@
                             <option value="Wiest">Wiest</option>
                             <option value="Ferber">Ferber</option>
                             <option value="Lessman">Lessmann</option>
+                            <option value="Hilgers">Lessmann</option>
                         </select><br>
                     </div>
                     <div class="criteria-section">
